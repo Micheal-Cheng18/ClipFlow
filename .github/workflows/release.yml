@@ -1,0 +1,60 @@
+name: Publish macOS Release
+on:
+  push:
+    branches: [main]
+    paths: ['.github/release-request.json']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: clipflow-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: macos-15
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Resolve release version
+        id: version
+        shell: zsh {0}
+        run: |
+          set -eu
+          version=$(plutil -extract CFBundleShortVersionString raw -o - Resources/Info.plist)
+          requested=$(python3 -c 'import json; print(json.load(open(".github/release-request.json"))["version"])')
+          [[ "$version" == "$requested" ]] || { print -u2 "Release request does not match app version"; exit 1; }
+          [[ "$version" =~ '^[0-9]+\.[0-9]+\.[0-9]+$' ]] || exit 1
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Run regression checks
+        run: ./scripts/test-shortcuts.sh
+      - name: Run XCTest
+        run: swift test
+      - name: Build universal application and checksums
+        run: ./scripts/package-release.sh
+      - name: Publish preview release
+        shell: zsh {0}
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -eu
+          tag="v$RELEASE_VERSION"
+          archive="dist/ClipFlow-$RELEASE_VERSION-macOS-universal.zip"
+          notes="docs/releases/$tag.md"
+          if gh release view "$tag" --json isDraft > /tmp/clipflow-release.json 2>/dev/null; then
+            python3 -c 'import json; assert json.load(open("/tmp/clipflow-release.json"))["isDraft"], "This version is already published; use a new version"'
+            target=$(gh api "repos/$GH_REPO/git/ref/tags/$tag" --jq .object.sha)
+            [[ "$target" == "$GITHUB_SHA" ]] || { print -u2 "Existing draft tag points to another commit"; exit 1; }
+            gh release upload "$tag" "$archive" "$archive.sha256" --clobber
+          else
+            gh release create "$tag" "$archive" "$archive.sha256" \
+              --target "$GITHUB_SHA" --title "ClipFlow $RELEASE_VERSION · Preview" \
+              --notes-file "$notes" --draft --prerelease
+          fi
+          gh release edit "$tag" --draft=false --prerelease

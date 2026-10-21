@@ -18,6 +18,10 @@
 - 鼠标位置锚定、多屏边界限制、顶部拖动。
 - 系统深浅色半透明材质、悬停高亮和开关动画，适配“减少动态效果”。
 
+## 下载预览版
+
+前往 [GitHub Releases](https://github.com/Micheal-Cheng18/ClipFlow/releases) 下载 Universal 安装包，兼容 Apple Silicon 与 Intel Mac。解压后将 `ClipFlow.app` 拖入“应用程序”。预览版使用临时签名，尚未 Apple 公证。
+
 ## 构建与运行
 
 需要 macOS 14+、Swift 6.0+（以 Swift 5 语言模式编译）、Apple Command Line Tools 或 Xcode。
@@ -76,3 +80,7 @@ docs/             验收说明
 ```
 
 输出为 `docs/media/demo.gif`：840 × 620、25 fps、16.4 秒，采用全局调色板和差分压缩。
+
+## 发布版本
+
+更新 `Resources/Info.plist` 中的版本、`.github/release-request.json` 及对应的 `docs/releases/v版本.md` 后推送到 main，将触发测试、Universal 打包、校验文件生成与预览版 Release 发布。也可从 Actions 手动运行 Publish macOS Release。已发布的版本不会自动覆盖。
