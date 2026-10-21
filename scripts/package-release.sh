@@ -44,7 +44,7 @@ chmod +x "$app_dir/Contents/MacOS/ClipFlow"
 cp Resources/Info.plist "$app_dir/Contents/Info.plist"
 codesign --force --sign "${CLIPFLOW_SIGN_IDENTITY:--}" "$app_dir"
 codesign --verify --deep --strict "$app_dir"
-lipo -verify_arch arm64 x86_64 "$app_dir/Contents/MacOS/ClipFlow"
+lipo "$app_dir/Contents/MacOS/ClipFlow" -verify_arch arm64 x86_64
 print "Architectures: $(lipo -archs "$app_dir/Contents/MacOS/ClipFlow")"
 
 rm -f "$PWD/dist/$archive_name"
