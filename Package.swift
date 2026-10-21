@@ -1,3 +1,3 @@
 // swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "ClipFlow", platforms: [.macOS(.v14)], products: [.executable(name: "ClipFlow", targets: ["ClipFlow"])], targets: [.executableTarget(name: "ClipFlow")], swiftLanguageModes: [.v5])
+let package = Package(name: "ClipFlow", platforms: [.macOS(.v14)], products: [.executable(name: "ClipFlow", targets: ["ClipFlow"])], targets: [.executableTarget(name: "ClipFlow"), .testTarget(name: "ClipFlowTests", dependencies: ["ClipFlow"])], swiftLanguageModes: [.v5])

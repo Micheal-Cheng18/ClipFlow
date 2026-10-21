@@ -9,6 +9,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Show Swift version
         run: swift --version
+      - name: Test shortcut configuration
+        run: swift test
       - name: Build and verify app
         run: ./scripts/build.sh
       - uses: actions/upload-artifact@v4

@@ -44,14 +44,15 @@ struct ClipRow: View {
 }
 struct Content: View {
     @ObservedObject var store: Store
+    @ObservedObject var shortcuts: ShortcutManager
     var paste: (Clip) -> Void
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Image(systemName: "square.on.square.fill").font(.system(size: 18)).foregroundStyle(.white).frame(width: 32, height: 32).background(.blue.gradient, in: RoundedRectangle(cornerRadius: 10))
-                VStack(alignment: .leading, spacing: 2) { Text("ClipFlow · 0.6").font(.system(size: 16, weight: .semibold)); Text("你的剪贴板，随手可得").font(.system(size: 11)).foregroundStyle(.secondary) }
+                VStack(alignment: .leading, spacing: 2) { Text("ClipFlow · 0.7").font(.system(size: 16, weight: .semibold)); Text("你的剪贴板，随手可得").font(.system(size: 11)).foregroundStyle(.secondary) }
                 Spacer()
-                Text("⌘ ⇧ V").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(.secondary).padding(7).background(.primary.opacity(0.05), in: RoundedRectangle(cornerRadius: 7))
+                Text(shortcuts.isAvailable ? shortcuts.shortcut.display : "快捷键 ⚠").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(.secondary).padding(7).background(.primary.opacity(0.05), in: RoundedRectangle(cornerRadius: 7))
             }.padding(16).overlay { DragHandle().help("拖动移动窗口") }
             HStack(spacing: 8) { Image(systemName: "magnifyingglass").foregroundStyle(.secondary); TextField("搜索复制过的内容", text: $store.query).textFieldStyle(.plain); if !store.query.isEmpty { Button { store.query = "" } label: { Image(systemName: "xmark.circle.fill") }.buttonStyle(.plain) } }.padding(11).background(.primary.opacity(0.055), in: RoundedRectangle(cornerRadius: 10)).padding(.horizontal, 16)
             HStack { Text("历史记录"); Spacer(); Text("\(store.visible.count) 条") }.font(.system(size: 11, weight: .medium)).foregroundStyle(.secondary).padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 10)
