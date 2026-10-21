@@ -2,7 +2,7 @@
 
 轻量的 macOS 原生剪贴板管理器。用 **⌘⇧V**（可自定义）在鼠标附近唤起历史，搜索并粘贴文字或图片。
 
-基于 SwiftUI + AppKit，无第三方运行时依赖。当前版本：**0.7.0（MVP）**。
+基于 SwiftUI + AppKit，无第三方运行时依赖。当前版本：**0.7.1（MVP）**。
 
 ## 功能演示
 
@@ -52,7 +52,7 @@ defaults write local.clipflow.app panelWidth -float 400
 - 暂停记录不会清除已有数据；清空保留固定项，固定项需单独删除。
 - 支持图片内容，不保证支持 Finder 图片文件复制；不支持任意文件历史。
 - 暂无登录启动、应用排除列表或加密存储。
-- 使用系统 ultraThinMaterial 实现 Liquid Glass 灵感外观，不依赖最新 Liquid Glass API。
+- 使用 AppKit 系统材质实现 Liquid Glass 灵感外观，不依赖最新 Liquid Glass API。
 
 ## 工程结构
 

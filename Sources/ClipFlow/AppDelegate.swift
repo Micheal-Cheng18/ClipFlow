@@ -21,7 +21,11 @@ import Combine
         panel = ClipPanel(contentRect: NSRect(x: 0, y: 0, width: 420, height: 540), styleMask: [.borderless], backing: .buffered, defer: false)
         panel.level = .floating; panel.isFloatingPanel = true; panel.hidesOnDeactivate = false; panel.delegate = self
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        panel.contentView = InteractiveHostingView(rootView: Content(store: store, shortcuts: shortcuts, paste: { [weak self] in self?.paste($0) }))
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
+        panel.contentView = RoundedPanelSurface(
+            frame: NSRect(x: 0, y: 0, width: store.panelWidth, height: store.panelHeight),
+            rootView: Content(store: store, shortcuts: shortcuts, paste: { [weak self] in self?.paste($0) }))
         Publishers.Merge(store.$clips.map { _ in () }, store.$query.map { _ in () })
             .receive(on: RunLoop.main).sink { [weak self] in self?.resizePanel() }.store(in: &subscriptions)
         panel.isOpaque = false; panel.backgroundColor = .clear; panel.hasShadow = true

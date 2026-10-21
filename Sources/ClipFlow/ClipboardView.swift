@@ -50,7 +50,7 @@ struct Content: View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Image(systemName: "square.on.square.fill").font(.system(size: 18)).foregroundStyle(.white).frame(width: 32, height: 32).background(.blue.gradient, in: RoundedRectangle(cornerRadius: 10))
-                VStack(alignment: .leading, spacing: 2) { Text("ClipFlow · 0.7").font(.system(size: 16, weight: .semibold)); Text("你的剪贴板，随手可得").font(.system(size: 11)).foregroundStyle(.secondary) }
+                VStack(alignment: .leading, spacing: 2) { Text("ClipFlow · 0.7.1").font(.system(size: 16, weight: .semibold)); Text("你的剪贴板，随手可得").font(.system(size: 11)).foregroundStyle(.secondary) }
                 Spacer()
                 Text(shortcuts.isAvailable ? shortcuts.shortcut.display : "快捷键 ⚠").font(.system(size: 11, weight: .medium, design: .monospaced)).foregroundStyle(.secondary).padding(7).background(.primary.opacity(0.05), in: RoundedRectangle(cornerRadius: 7))
             }.padding(16).overlay { DragHandle().help("拖动移动窗口") }
@@ -74,7 +74,7 @@ struct Content: View {
                 Spacer()
                 Button("清空未固定项") { withAnimation(.easeOut(duration: 0.2)) { store.clips.removeAll { !$0.pinned } }; store.save() }.buttonStyle(.borderless).disabled(!store.clips.contains { !$0.pinned })
             }.font(.system(size: 11)).padding(18)
-        }.frame(width: store.panelWidth, height: store.panelHeight).background(.ultraThinMaterial)
+        }.frame(width: store.panelWidth, height: store.panelHeight)
         .clipShape(RoundedRectangle(cornerRadius: 18))
         .overlay(RoundedRectangle(cornerRadius: 18).strokeBorder(.primary.opacity(0.10)))
     }

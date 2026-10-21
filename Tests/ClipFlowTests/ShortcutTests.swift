@@ -4,7 +4,7 @@ import XCTest
 final class ShortcutTests: XCTestCase {
     func testShortcutScenarios() async {
         await MainActor.run {
-            for scenario in ShortcutScenarios.all {
+            for scenario in ShortcutScenarios.all + PanelSurfaceScenarios.all {
                 XCTAssertNoThrow(try scenario.run(), scenario.name)
             }
         }
