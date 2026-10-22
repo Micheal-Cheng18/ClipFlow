@@ -2,13 +2,13 @@
 
 轻量的 macOS 原生剪贴板管理器。用 **⌘⇧V**（可自定义）在鼠标附近唤起历史，搜索并粘贴文字或图片。
 
-基于 SwiftUI + AppKit，无第三方运行时依赖。当前版本：**0.7.1（MVP）**。
+基于 SwiftUI + AppKit，无第三方运行时依赖。当前版本：**0.7.1**。
 
 ## 功能演示
 
 ![ClipFlow 功能演示](docs/media/demo.gif)
 
-> 使用示例数据制作的示意动画，非实机录屏。以 25 帧/秒连续展示唤起、逐字搜索、固定、图片粘贴、删除、清空和窗口拖动。
+> 使用示例数据制作的示意动画，非实机录屏。连续展示唤起、逐字搜索、固定、图片粘贴、删除、清空和窗口拖动。
 
 ## 功能
 
@@ -57,30 +57,3 @@ defaults write local.clipflow.app panelWidth -float 400
 - 支持图片内容，不保证支持 Finder 图片文件复制；不支持任意文件历史。
 - 暂无登录启动、应用排除列表或加密存储。
 - 使用 AppKit 系统材质实现 Liquid Glass 灵感外观，不依赖最新 Liquid Glass API。
-
-## 工程结构
-
-```text
-Sources/ClipFlow/   模型、剪贴板存储、SwiftUI 视图、AppKit 窗口和入口
-Resources/         应用元数据
-scripts/build.sh   Release 构建、打包及签名
-docs/             验收说明
-```
-
-构建产物在 `dist/`，已从 Git 排除。默认采用本地临时签名；可通过 `CLIPFLOW_SIGN_IDENTITY` 指定签名身份。对外分发前需自行完成 Developer ID 签名及公证。
-
-参见 [贡献指南](CONTRIBUTING.md)、[手动验收](docs/TESTING.md) 和 [更新记录](CHANGELOG.md)。目前未设置开源许可证，公开仓库不代表授予开源使用许可；发布前请由项目作者选择许可证。
-
-## 重新生成演示动图
-
-演示使用合成数据，不读取系统剪贴板或录制桌面。需要 Swift 和 `ffmpeg`：
-
-```sh
-./scripts/generate-demo.sh
-```
-
-输出为 `docs/media/demo.gif`：840 × 620、25 fps、16.4 秒，采用全局调色板和差分压缩。
-
-## 发布版本
-
-更新 `Resources/Info.plist` 中的版本、`.github/release-request.json` 及对应的 `docs/releases/v版本.md` 后推送到 main，将触发测试、Universal 打包、校验文件生成与预览版 Release 发布。也可从 Actions 手动运行 Publish macOS Release。已发布的版本不会自动覆盖。
