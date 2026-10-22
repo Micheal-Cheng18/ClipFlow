@@ -57,3 +57,9 @@ defaults write local.clipflow.app panelWidth -float 400
 - 支持图片内容，不保证支持 Finder 图片文件复制；不支持任意文件历史。
 - 暂无登录启动、应用排除列表或加密存储。
 - 使用 AppKit 系统材质实现 Liquid Glass 灵感外观，不依赖最新 Liquid Glass API。
+
+## 开源与贡献
+
+Copyright 2026 Micheal-Cheng18。项目采用 [Apache License 2.0](LICENSE)，相关版权说明见 [NOTICE](NOTICE)。
+
+欢迎通过 [问题反馈](https://github.com/Micheal-Cheng18/ClipFlow/issues/new/choose) 和 Pull Request 参与改进。开发与验证方式见 [贡献指南](CONTRIBUTING.md)，隐私说明和漏洞报告方式见 [安全政策](SECURITY.md)。

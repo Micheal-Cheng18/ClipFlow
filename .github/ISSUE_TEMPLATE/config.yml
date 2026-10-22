@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 下载与更新记录
+    url: https://github.com/Micheal-Cheng18/ClipFlow/releases
+    about: 查看已发布版本、安装包及版本说明。
+  - name: 安全漏洞私密报告
+    url: https://github.com/Micheal-Cheng18/ClipFlow/security/advisories/new
+    about: 请私密报告漏洞。若入口不可用，请等待启用，不要公开漏洞细节。

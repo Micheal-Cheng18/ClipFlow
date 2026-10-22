@@ -38,10 +38,11 @@ archive_name="ClipFlow-$version-macOS-universal.zip"
 mkdir -p "$PWD/dist"
 # Replace only the generated bundle after both architecture builds succeed.
 rm -rf "$app_dir"
-mkdir -p "$app_dir/Contents/MacOS"
+mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Resources"
 lipo -create "${binaries[@]}" -output "$app_dir/Contents/MacOS/ClipFlow"
 chmod +x "$app_dir/Contents/MacOS/ClipFlow"
 cp Resources/Info.plist "$app_dir/Contents/Info.plist"
+cp LICENSE NOTICE "$app_dir/Contents/Resources/"
 codesign --force --sign "${CLIPFLOW_SIGN_IDENTITY:--}" "$app_dir"
 codesign --verify --deep --strict "$app_dir"
 lipo "$app_dir/Contents/MacOS/ClipFlow" -verify_arch arm64 x86_64

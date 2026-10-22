@@ -10,3 +10,8 @@ xcuserdata/
 !.env.example
 *.p12
 *.mobileprovision
+*.pem
+*.key
+*.p8
+history.json
+history.json.*
